@@ -2,7 +2,7 @@
 title: "Data Translation Challenge"
 author: "Sri Lakshmi"
 format:
-  html:
+  pdf:
     embed-resources: true
 editor: visual
 ---
@@ -40,64 +40,6 @@ The data covers the amazon sales of 19 different technology products in urban ar
 ## Sales Analysis reveals that December is the best month for the listed tech products sales in 2019
 
 Visualizing the sales performance over time by month to identify the seasonal patterns and trends in sales. This also helps compare sales performance by month to determine which month had the highest sales in 2019.
-
-```{r}
-library(tidyverse)
-library(lubridate)
-library(scales)
-library(dplyr)
-library(stringr)
-library(ggalt)
-library(patchwork)
-library(reshape2)
-library(ggpubr)
-library(hrbrthemes)
-library(viridis)
-library(ggforce)
-library(treemapify)
-
-load('sales_data.Rdata')
-
-sales$Quantity <- as.integer(sales$Quantity)
-sales$PriceEach <- as.numeric(sales$PriceEach)
-sales$Product <- as.factor(sales$Product)
-
-sales <- sales %>%
-  filter(Date != '2020-01-01') %>%
-  mutate(sales_value = PriceEach * Quantity,
-         month = month(Date, label = TRUE),
-         place = paste(City, State, ZIP, sep = " , "),
-         hour = hour(DateTime),
-         day = weekdays(DateTime),
-         category = case_when(
-           grepl('Monitor', Product) ~ 'Monitors',
-           grepl('Laptop', Product) ~ 'Laptops',
-           grepl('Headphones', Product) ~ 'Headphones',
-           grepl('Phone', Product) ~ 'Phones',
-           grepl('Cable|Batteries', Product) ~ 'Accessories',
-           TRUE ~ 'Home Appliances'
-         ))
-
-sales %>%  
-  group_by(month) %>%
-  summarise(monthly_sales = sum(sales_value)) %>%
-  ggplot(aes(x = month, y = monthly_sales)) +
-  geom_line(linewidth = 1.5, colour = '#2171B5', group = 1) + geom_point(size = 3, shape = 21, fill = '#2171B5') +
-  geom_text(aes(label = paste0(comma(round(monthly_sales/1000)), 'K')), hjust = -.25, vjust = .10, family = 'serif', size = 11/.pt) +
-  geom_label(data = data.frame(x = 9.3820086903463, y = 4726441.49624471, label = "Sales peak the most in December\n month with a revenue of $ 4,613K"),
-             mapping = aes(x = x, y = y, label = label),
-             label.padding = unit(0.8, "lines"),
-             label.size = 0.8, label.r = unit(0.8, "lines"),
-             inherit.aes = FALSE, family = 'serif', fontface = 2, size = 14/.pt, fill = '#DEEBF7') +
-  labs(title = "Sales by month, 2019", subtitle = 'Sales Performance over time', x = "Month", y = "Monthly Sales (in thousands $)") +
-  scale_y_continuous(limits = c(1500000, 5000000), breaks = c(2000000, 3000000, 4000000, 5000000), labels = comma_format(scale = 1/1000, prefix = "$", suffix = 'K')) +
-  theme_classic() +
-  theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), 'cm'),
-        axis.text = element_text(size = 12,family='serif'),
-        axis.title = element_text(face = 'bold', size = 12,family = 'serif'),
-        plot.title = element_text(family = 'serif', size = 18, face = 'bold', margin = margin(0,0,0.5,0,'cm')),
-        plot.subtitle = element_text(face = 'bold',size = 16,family = 'serif'))
-```
 
 ![](images/1.%20Sales%20by%20month-02.png)
 
