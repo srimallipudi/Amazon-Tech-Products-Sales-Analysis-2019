@@ -41,7 +41,7 @@ The data covers the amazon sales of 19 different technology products in urban ar
 
 Visualizing the sales performance over time by month to identify the seasonal patterns and trends in sales. This also helps compare sales performance by month to determine which month had the highest sales in 2019.
 
-![](images/1.%20Sales%20by%20month-02.png)
+![](Visualizations/Sales by month.png)
 
 The above visualization shows that the highest tech product sales were recorded in December with a revenue of approx. \$4,613K followed by October month with a revenue of approx. \$3,737K, indicating that the holiday season is a critical time for the business. Hence, I recommend providing more discounts and offers on tech products during the holiday season, further boosting sales.
 
